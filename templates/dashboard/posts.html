@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="row">
+    <!-- Left sidebar -->
+    <!-- load the sidebar here -->
+    {% include 'dashboard/sidebar.html' %}
+
+    <!-- Right side content -->
+    <div class="col-md-9">
+        <h2>All Posts</h2>
+        <a href="{% url 'add_post' %}" class="btn btn-dark text-light float-right mb-2">Add New</a>
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Author</th>
+                <th>Status</th>
+                <th>Featured</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for post in posts %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.category }}</td>
+                <td>{{ post.author }}</td>
+                <td>{{ post.status }}</td>
+                <td>{% if post.is_featured %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                <td>
+                    <a href="{% url 'edit_post' post.id %}"><i class="fa fa-edit text-success"></i></a>
+                    &nbsp;
+                    <a href="{% url 'delete_post' post.id %}"><i class="fa fa-trash text-danger"></i></a>
+                </td>
+              </tr>
+            {% endfor %}
+              
+            </tbody>
+          </table>
+    </div>
+</div>
+
+{% endblock %}
